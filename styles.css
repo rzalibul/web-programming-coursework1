@@ -8,9 +8,9 @@ body
 div
 {
 	/* delete the comment below to see the layout */
-	border: 1px black solid;
+	/* border: 1px black solid; */
 	/* preperaing flexbox */
-	/* based on: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+	/* all code regarding flexbox based on: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -122,11 +122,6 @@ h2
 	text-align: center;
 }
 
-p
-{
-	display: flex;
-	margin: 2vh 5vw 2vh 5vw;
-}
 p.intro
 {
 	margin-top: 2vh;
@@ -144,6 +139,7 @@ div#footer
 	margin-top: 2vh;
 	margin-bottom: auto;
 	flex-grow: 0.1;
+	text-align: right;
 }
 
 /* gallery specific */
@@ -176,15 +172,41 @@ div#commentList
 {
 	
 }
+div#commentArea
+{
+	
+}
+input#nameBox
+{
+	width: 30em;
+}
 textarea#commentBox
 {
 	font-family: Arial;
+	resize: none;
+	width: 60vw;
+	max-width: 60vw;
+	min-height: 10vh;
+}
+p.comment
+{
+	font-style: italic;
+	margin-top: 3vh;
+}
+span.cmtName
+{
+	margin-top: 2vh;
+}
+span.date
+{
+	margin-top: 2vh;
 }
 /* contact page specific */
 div#contactInfo
 {
 	float: left;
 	flex-grow: 1;
+	text-align: center;
 }
 
 div#map

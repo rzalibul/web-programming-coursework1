@@ -17,7 +17,7 @@ function clearStorage()
 
 function saveComment()
 {
-	// to add: write comments with descending date order, ratings (maybe?)
+	// to add: write comments with descending date order, ratings (maybe?), adding links to all comments
 	var cText = $('#commentBox').val();
 	var cName = $('#nameBox').val();
 	if (cName === "")
@@ -35,7 +35,7 @@ function saveComment()
 		else
 			prevComments = $('#commentList').html();
 	*/
-	var curComment = prevComments + '<span class="cmtName">' + cName + ' says:' + '</span><p class="mainText">' + cText + '</p><span>' + Date() + '</span><br />';
+	var curComment = prevComments + '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p><span class="date">' + Date() + '</span><br />';
 	$('#commentList').empty();
 	$('#commentList').append(curComment);
 	setObject('comments', $('#commentList').html());
@@ -51,7 +51,7 @@ function clearComment()
 
 function fetchComments()
 {
-	// to add: load comments with descending date order(from the most recent to the least recent)
+	// to add: load comments with descending date order (from the most recent to the least recent)
 	var inList = getObject('comments');
 	if (inList == null)
 		inList = '<span class="cmtName">No comments</span>';
