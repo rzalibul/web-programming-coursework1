@@ -16,5 +16,5 @@ Specific pages:
 - Main page: needs content regarding certain paragraphs (more in index.html)
 - Gallery: placeholder images in effect; whole page may need to be redesigned to accomodate thumbnails and slideshows
 - Local activities: needs content
-- Reviews: almost finished
+- Reviews: specific styling and core finished (additional functionalities may be addressed)
 - Contact: needs content, perhaps modified styling
