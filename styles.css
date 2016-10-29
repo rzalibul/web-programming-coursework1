@@ -1,0 +1,195 @@
+body
+{
+	/* resetting browser default properties */
+	margin: 0;
+	padding: 0;
+}
+
+div
+{
+	/* delete the comment below to see the layout */
+	border: 1px black solid;
+	/* preperaing flexbox */
+	/* based on: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+div#wrap
+{
+	/* setting defaults for the document */
+	height: auto;
+	margin: auto 2.5vw auto 2.5vw;
+	padding: 1vh 1vw 1vh 1vw;
+	/* setting default font */
+	font-family: Arial;
+	font-size: small;
+}
+div#header
+{
+	width: 80vw;
+	height: 10vh;
+	margin: auto;
+	margin-bottom: 2vh;
+}
+div#mainNav
+{
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	align-items: stretch;
+	width: 79.5vw;		/* margin/padding refactoring possibly needed elsewhere */
+	/* margin: auto 5vw auto auto; */
+	margin: auto;
+	margin-right: 0;
+}
+
+a
+{
+	text-decoration: none;
+}
+
+a.mainNavLink
+{
+	height: 5vh;
+	line-height: 5vh;
+	flex-grow: 1;
+	font-size: medium;
+	margin: auto;
+	text-align: center;
+	background-color: #000000;
+	color: #ffffff;
+	padding-left: 1vw;
+	padding-right: 1vw;
+}
+
+a.mainNavLink:hover
+{
+	background-color: #ffffff;
+	color: #000000;
+}
+
+div#main
+{
+	flex-direction: row;
+	justify-content: center;
+	/*min-height: 65vh;*/
+	/*height: auto;*/
+	flex-grow: 3;
+	margin-top: 2vh;
+}
+
+div#sideNav
+{
+	flex-grow: 1;
+	justify-content: flex-start;
+	margin: 1vh 0 1vh 1vw;	/* margin-left: 0; */
+}
+
+a.sideNavLink	/* refactoring possible */
+{
+	flex-basis: 5vh;
+	line-height: 5vh;
+	font-size: medium;
+	padding-top: 2vh;
+	padding-bottom: 2vh;
+	text-align: center;
+	background-color: #000000;
+	color: #ffffff;
+}
+
+a.sideNavLink:hover	/* refactoring possible */
+{
+	background-color: #ffffff;
+	color: #000000;
+}
+
+div#contentWrap
+{
+	flex-grow: 10;
+	width: 10vw;
+	margin: 1vh 1vw 1vh 1vw;
+	flex-direction: column;
+	justify-content: flex-start;
+	text-align: justify;
+	margin-bottom: 1vh;
+}
+
+h2
+{
+	margin: 4vh 0 4vh 0;
+	text-align: center;
+}
+
+p
+{
+	display: flex;
+	margin: 2vh 5vw 2vh 5vw;
+}
+p.intro
+{
+	margin-top: 2vh;
+	flex-grow: 0.1;
+}
+
+p.mainText
+{
+	flex-grow: 1;
+}
+
+div#footer
+{
+	height: auto;
+	margin-top: 2vh;
+	margin-bottom: auto;
+	flex-grow: 0.1;
+}
+
+/* gallery specific */
+div#galleryWrap
+{
+	flex-direction: row;
+	justify-content: space-around;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	margin: auto;
+	/* padding adjustments to ensure same distances between thumbnails */
+	padding-top: 1vh;
+	padding-bottom: 2vh;
+}
+div.thumbnail
+{
+	width: 400px;
+	height: 320px;
+	background-image: url('placeholder.png');
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+}
+
+/* review/comment page specific */
+div#commentWrap
+{
+	
+}
+div#commentList
+{
+	
+}
+textarea#commentBox
+{
+	font-family: Arial;
+}
+/* contact page specific */
+div#contactInfo
+{
+	float: left;
+	flex-grow: 1;
+}
+
+div#map
+{
+	float: left;
+}
+
+

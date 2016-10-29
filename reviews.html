@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Reviews</title>	<!-- placeholder -->
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="script.js"></script>
+	</head>
+	<body onLoad="fetchComments()">
+		<div id="wrap">
+			<!-- <div id="header">
+			</div> -->
+			<div id="mainNav">
+				<a class="mainNavLink" href="index.html">Main Page</a>
+				<a class="mainNavLink" href="gallery.html">Gallery</a>
+				<a class="mainNavLink" href="attractions.html">Local Activities</a>
+				<a class="mainNavLink" href="reviews.html">Reviews</a>
+				<a class="mainNavLink" href="contactus.html">Contact Us</a>
+			</div>
+			<div id="main">
+				<div id="sideNav">
+					<a class="sideNavLink" onClick="saveComment()">Save comment</a>
+					<a class="sideNavLink" onClick="clearComment()">Clear comment</a>
+				</div>
+				<div id="contentWrap">
+					<span id="intro"></span>	<!-- labeling for a link -->
+					<!-- <p class="intro">
+						Something about leaving a comment
+					</p> -->
+					<div id="commentWrap">
+						<h2>Reviews and comments</h2>
+						<div id="commentList">
+							<!--
+								here will appear JavaScript-loaded comments
+							-->
+						</div>
+						<div id="commentArea">
+							<h2>Your review or comment</h2>
+							Your name: <input id="nameBox" type="text" maxlength="32" size="20" placeholder="Enter your name..." /><br />
+							Your comment: <textarea id="commentBox" placeholder="Enter your comment..."></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="footer">
+				<p id="footnote">Created by Adrian Wesolowski. Last modified on 29/10/2016.</p>
+			</div>
+		</div>
+	</body>
+</html>
