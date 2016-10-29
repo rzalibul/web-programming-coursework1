@@ -4,9 +4,8 @@
 		<title>Gallery</title>	<!-- placeholder -->
 		<link rel="stylesheet" type="text/css" href="styles.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script src="script.js"></script>
 	</head>
-	<body onLoad="fetchComments()">
+	<body>
 		<div id="wrap">
 			<!-- <div id="header">
 			</div> -->
@@ -27,31 +26,17 @@
 				<div id="contentWrap">
 					<h2>Gallery</h2>
 					<div id="galleryWrap">
-						<div class="thumbnail">
+						<div id="mainImg">
+							<div class="imgNav" id="prevImg">&lt;</div>
+							<img id="fullSize" src="img/placeholder.png" />
+							<div class="imgNav" id="nextImg">&gt;</div>
 						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
-						</div>
-						<div class="thumbnail">
+						<div id="slides">
+							<img class="thumbnail" src="img/placeholder.png" />
+							<img class="thumbnail" src="img/placeholder.png" />
+							<img class="thumbnail" src="img/placeholder.png" />
+							<img class="thumbnail" src="img/placeholder.png" />
+							<img class="thumbnail" src="img/placeholder.png" />
 						</div>
 					</div>
 				</div>
@@ -60,5 +45,6 @@
 				<p id="footnote">Created by Adrian Wesolowski. Last modified on 29/10/2016.</p>
 			</div>
 		</div>
+		<script src="script.js"></script>
 	</body>
 </html>

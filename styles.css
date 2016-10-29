@@ -145,24 +145,65 @@ div#footer
 /* gallery specific */
 div#galleryWrap
 {
-	flex-direction: row;
-	justify-content: space-around;
-	align-content: flex-start;
-	flex-wrap: wrap;
+	/* flex-direction: column; */
+	/* justify-content: space-around; */
+	/* align-content: flex-start; */
+	/* flex-wrap: wrap; */
 	margin: auto;
 	/* padding adjustments to ensure same distances between thumbnails */
 	padding-top: 1vh;
 	padding-bottom: 2vh;
 }
-div.thumbnail
+div#mainImg
+{
+	flex-direction: row;
+	width: 520px;
+	height: 320px;
+	margin: auto;
+}
+div#slides
+{
+	flex-direction: row;
+	width: calc(202px * 5);			/* 5 = amount of images in the slidebar; 202px is total of width + 2 * 1px of border from both sides */
+	margin: auto;
+	margin-top: 1vh;
+	border: 4px solid black;
+}
+img.thumbnail
+{
+	width: 200px;
+	height: 160px;
+	border: 1px solid black;
+}
+img.thumbnail:hover
+{
+	cursor: pointer;
+}
+img#fullSize
 {
 	width: 400px;
 	height: 320px;
-	background-image: url('placeholder.png');
-	margin-top: 1vh;
-	margin-bottom: 1vh;
+}
+div.imgNav
+{
+	width: 60px;
+	height: 320px;
+	background-color: black;
+	color: #ffffff;
+	text-align: center;
+	font-size: 4em;
+	opacity: 0;
+	cursor: pointer;
 }
 
+div#prevImg
+{
+
+}
+div#nextImg
+{
+
+}
 /* review/comment page specific */
 div#commentWrap
 {

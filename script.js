@@ -14,7 +14,7 @@ function clearStorage()
 	// removes everything placed in localstorage
 	window.localStorage.clear();
 };
-
+/* review page functionality */
 function saveComment()
 {
 	// to add: write comments with descending date order, ratings (maybe?), adding links to all comments
@@ -58,3 +58,34 @@ function fetchComments()
 	$('#commentList').empty();
 	$('#commentList').append(inList);
 }
+/* gallery page functionality */
+
+$(".imgNav").hover	// to modify: make it a fade in to stop flicking
+(
+	function()
+	{
+		$(this).css("opacity") == "0" ? $(this).css("opacity", "1") : $(this).css("opacity", "0");	// display the navigation button when hovered and hide it when cursor stops hovering
+	}
+);
+
+$(".imgNav").click
+(
+	function changeImage()
+	{
+		var selector = event.target;
+		if(selector.id === "prevImg")
+			changeImage.position = ++changeImage.position || 1;		// if static variable hasn't been called yet, it will be undefined and therefore initial value needs to be assigned
+		else
+		{
+			changeImage.position = --changeImage.position || -1;	// similarly to above
+		}
+		if(changeImage.position > 0)								// display the previous/next image in this case
+		{
+			document.getElementById("fullSize").src = "some_new_relative_path";
+		}
+		else														// the slidebar could be overflown if desired; otherwise there is nothing else to do
+		{
+			
+		}	
+	}
+);
