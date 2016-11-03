@@ -73,41 +73,68 @@ $(".imgNav").click
 (
 	function changeImage()
 	{
-		var thumbnailList = 
-		[
-			'mini1.jpg',
-			'mini2.jpg',
-			'mini3.jpg',
-			'mini4.jpg',
-			'mini5.jpg'
-		];
 		var imgList = 
 		[
-			'placeholder.png', 
-			'placeholder2.png', 
-			'placeholder3.png', 
-			'placeholder4.png', 
-			'placeholder5.png'
+			'1.jpg', 
+			'2.jpg', 
+			'3.jpg', 
+			'4.jpg', 
+			'5.jpg',
+			'6.jpg',
+			'7.jpg',
+			'8.jpg',
+			'9.jpg',
+			'10.jpg',
+			'11.jpg',
+			'12.jpg',
+			'13.jpg',
+			'14.jpg',
+			'15.jpg',
+			'16.jpg',
+			'17.jpg',
+			'18.jpg',
+			'19.jpg'
 		];
 		var selector = event.target;
 		if(selector.id === "prevImg")
-			changeImage.position = --changeImage.position || -1;	// if static variable hasn't been called yet, 
-		else														// it will be undefined and therefore initial value needs to be assigned	
 		{
-			changeImage.position = ++changeImage.position || 1;		// similarly to above
+			if(changeImage.position === undefined)					// if static variable hasn't been called yet,
+				changeImage.position = 0;							// it will be undefined and therefore initial value needs to be assigned	
+			if(changeImage.position > 0)							// force the position to be a non-negative integer
+				changeImage.position--;
 		}
-		if(changeImage.position > 0)								// display the previous/next image in this case
+		else														
 		{
-			document.getElementById("fullSize").src = imgList[changeImage.position];
-			if(changeImage.position % 5 == 0)						// 5 images in a slidebar - that means every fifth image is the last 
-			{														// position index starts at 0 though
-				var curThumbnails = document.getElementsByClassName("thumbnail");
-				for(var i = 0; i < 5; i++)
+			if(changeImage.position === undefined)
+				changeImage.position = 1;							// similarly to above
+			else
+			{
+				if(changeImage.position < imgList.length)			// eliminates index overflow
+					changeImage.position++;
+			}
+		}
+		if(changeImage.position >= 0)								// display the previous/next image in this case
+		{
+			document.getElementById("fullSize").src = "img/" + imgList[changeImage.position];
+			if((changeImage.position % 5 == 4 && selector.id === "prevImg") || (changeImage.position % 5 == 0 && selector.id === "nextImg"))		
+			{																										// 5 images in a slidebar - that means every fifth image is the last 
+				var curThumbnails = document.getElementsByClassName("thumbnail");									// position index starts at 0 though; the second argument of the outer logic sum is needed when
+				if(selector.id === "nextImg")																		// button for displaying previous image is pressed directly after the slidebar is moved for next 5 images
 				{
-					curThumbnails[i].src = thumbnailList[i + changeImage.position];
-					// subsequently replace slidebar images
+					for(var i = 0; i < 5; i++)																		// to fix: iterate downward in order to produce slidebar which does not load "undefined images"
+					{
+						curThumbnails[i].src = "img/" + imgList[i + changeImage.position];
+						// subsequently replace slidebar images
+					}
 				}
-			}																	
+				else
+				{
+					for(var i = 0; i < 5; i++)																		// possibly do the same as above (not necessary, though)
+					{
+						curThumbnails[i].src = "img/" + imgList[changeImage.position + (i-4)];
+					}
+				}
+			}					
 		}
 		else		// the slidebar could be overflown if desired; otherwise there is nothing else to do
 		{
