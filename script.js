@@ -1,3 +1,4 @@
+"use strict";
 // utility functions for local storage with use of JSON
 function setObject(key, value) 
 {
@@ -69,7 +70,7 @@ $(".imgNav").hover	// to modify: make it a fade in to stop flicking
 	}
 );
 
-$(".imgNav").click
+$(".imgNav").click													// to fix: switch from static property to index attribute
 (
 	function changeImage()
 	{
@@ -95,8 +96,9 @@ $(".imgNav").click
 			'18.jpg',
 			'19.jpg'
 		];
-		var selector = event.target;
-		if(selector.id === "prevImg")
+		// defining array of image paths
+		var selector = event.target.id;								// selector will hold the id of event trigger (prevImg or nextImg in this case)
+		if(selector === "prevImg")
 		{
 			if(changeImage.position === undefined)					// if static variable hasn't been called yet,
 				changeImage.position = 0;							// it will be undefined and therefore initial value needs to be assigned	
@@ -106,8 +108,8 @@ $(".imgNav").click
 		else														
 		{
 			if(changeImage.position === undefined)
-				changeImage.position = 1;							// similarly to above
-			else
+				changeImage.position = 1;
+			else													// else clause stops the position index from incrementation right after initialisation
 			{
 				if(changeImage.position < imgList.length)			// eliminates index overflow
 					changeImage.position++;
@@ -115,15 +117,24 @@ $(".imgNav").click
 		}
 		if(changeImage.position >= 0)								// display the previous/next image in this case
 		{
-			document.getElementById("fullSize").src = "img/" + imgList[changeImage.position];
-			if((changeImage.position % 5 == 4 && selector.id === "prevImg") || (changeImage.position % 5 == 0 && selector.id === "nextImg"))		
-			{																										// 5 images in a slidebar - that means every fifth image is the last 
-				var curThumbnails = document.getElementsByClassName("thumbnail");									// position index starts at 0 though; the second argument of the outer logic sum is needed when
-				if(selector.id === "nextImg")																		// button for displaying previous image is pressed directly after the slidebar is moved for next 5 images
+			if(imgList[changeImage.position] != undefined)
+				document.getElementById("fullSize").src = "img/" + imgList[changeImage.position];
+			if((changeImage.position % 5 == 4 && selector === "prevImg") || (changeImage.position % 5 == 0 && selector === "nextImg"))	// refactor logical expression		
+			{																			// 5 images in a slidebar - that means every fifth image is the last 
+				var curThumbnails = document.getElementsByClassName("thumbnail");		// position index starts at 0 though; the second argument of the outer logic sum is needed when
+				if(selector === "nextImg")											// button for displaying previous image is pressed directly after the slidebar is moved for next 5 images
 				{
-					for(var i = 0; i < 5; i++)																		// to fix: iterate downward in order to produce slidebar which does not load "undefined images"
+					for(var i = 4; i > -1; i--)						// iterating downwards makes it easier to manipulate image tags as required
 					{
+						if (imgList[i + changeImage.position] === undefined)
+						{
+							$(curThumbnails[i]).attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+							// replace image with a pixel; courtesy of https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/
+							$(curThumbnails[i]).removeAttr('index');
+							continue;								// omit the current iteration
+						}
 						curThumbnails[i].src = "img/" + imgList[i + changeImage.position];
+						$(curThumbnails[i]).attr('index', changeImage.position + i);
 						// subsequently replace slidebar images
 					}
 				}
@@ -132,6 +143,7 @@ $(".imgNav").click
 					for(var i = 0; i < 5; i++)																		// possibly do the same as above (not necessary, though)
 					{
 						curThumbnails[i].src = "img/" + imgList[changeImage.position + (i-4)];
+						$(curThumbnails[i]).attr('index', changeImage.position + (i-4));
 					}
 				}
 			}					
@@ -140,5 +152,14 @@ $(".imgNav").click
 		{
 			
 		}	
+	}
+);
+
+$("img.thumbnail").click
+(
+	function()
+	{
+		var selector = event.target;
+		document.getElementById("fullSize").src = selector.src;
 	}
 );

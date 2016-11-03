@@ -42,7 +42,7 @@ div#mainNav
 	width: 79.5vw;		/* margin/padding refactoring possibly needed elsewhere */
 	/* margin: auto 5vw auto auto; */
 	margin: auto;
-	margin-right: 0;
+	/*margin-right: 0;*/
 }
 
 a
