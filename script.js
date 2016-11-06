@@ -15,6 +15,17 @@ function clearStorage()
 	// removes everything placed in localstorage
 	window.localStorage.clear();
 };
+
+$(document).ready
+(
+	function()
+	{
+		if (($.browser.msie && $.browser.version < 10) || $.browser.opera) 			// ensures compatibility of disabling text selection
+			$('#galleryWrap').attr('unselectable', 'on');
+		// source: http://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css/8099186#8099186
+	}
+)
+
 /* review page functionality */
 function saveComment()
 {
@@ -23,7 +34,7 @@ function saveComment()
 	var cName = $('#nameBox').val();
 	if (cName === "")
 		cName = "Anonymous";
-	alert('saveComment cName=' + cName + ' cText=' + cText);
+	//alert('saveComment cName=' + cName + ' cText=' + cText);
 	
 	var prevComments = $('#commentList').html() == '<span class="cmtName">No comments</span>' ? "" : $('#commentList').html();
 	// if there are no comments loaded, 'No comments' span element is present and in order to remove it, it needs to be checked
@@ -61,7 +72,7 @@ function fetchComments()
 }
 /* gallery page functionality */
 
-$(".imgNav").hover	// to modify: make it a fade in to stop flicking
+$(".imgNav, .imgSlideNav").hover	// to modify: make it a fade in to stop flicking
 (
 	function()
 	{
@@ -70,7 +81,47 @@ $(".imgNav").hover	// to modify: make it a fade in to stop flicking
 	}
 );
 
-$(".imgNav").click													// to fix: switch from static property to index attribute
+function changeSlidebar(imgList, index, reverse)						// if reverse is true, then get the previous indices
+{
+	var curThumbnails = document.getElementsByClassName("thumbnail");
+	if(reverse)
+	{
+		if(index % 5 == 4)									// 5 images in a slidebar - that means every fifth image is the last
+		{
+			for(var j = 0; j < 5; j++)						// possibly do the same as above (not necessary, though)
+			{
+				curThumbnails[j].src = "img/" + imgList[index + (j-4)];
+				$(curThumbnails[j]).attr('index', index + (j-4));
+				// subsequently replace slidebar images
+			}
+		}
+	}
+	else								// if reverse is anything but true or 1, then load next thumbnails
+	{
+		if(index % 5 == 0)
+		{
+			for(var j = 4; j > -1; j--)						// iterating downwards makes it easier to manipulate image tags as required
+			{
+				if (imgList[j + index] === undefined)
+				{
+					$(curThumbnails[j]).attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+					// replace image with a transparent pixel; source: https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/
+					$(curThumbnails[j]).removeAttr('index');
+					// remove index attribute to prevent the user from displaying the transparent pixel using conventional means
+				}
+				else
+				{
+					curThumbnails[j].src = "img/" + imgList[j + index];
+					$(curThumbnails[j]).attr('index', index + j);
+					// subsequently replace slidebar images
+				}
+			}
+
+		}
+	}
+}
+
+$(".imgNav").click
 (
 	function changeImage()
 	{
@@ -98,55 +149,26 @@ $(".imgNav").click													// to fix: switch from static property to index a
 		];
 		// defining array of image paths
 		var selector = event.target.id;								// selector will hold the id of event trigger (prevImg or nextImg in this case)
+		var index = parseInt($("img#fullSize").attr("index"));		// get the index from the current displayed image and cast it to integer
+		//console.log("index = " + index);
 		if(selector === "prevImg")
-		{
-			if(changeImage.position === undefined)					// if static variable hasn't been called yet,
-				changeImage.position = 0;							// it will be undefined and therefore initial value needs to be assigned	
-			if(changeImage.position > 0)							// force the position to be a non-negative integer
-				changeImage.position--;
-		}
+			index--;
 		else														
+			index++;
+		
+		if(index >= 0)												// display the previous/next image in this case
 		{
-			if(changeImage.position === undefined)
-				changeImage.position = 1;
-			else													// else clause stops the position index from incrementation right after initialisation
+			if(imgList[index] != undefined)
 			{
-				if(changeImage.position < imgList.length)			// eliminates index overflow
-					changeImage.position++;
+				var mainImg = document.getElementById("fullSize");
+				mainImg.src = "img/" + imgList[index];
+				$(mainImg).attr("index", index);			
 			}
-		}
-		if(changeImage.position >= 0)								// display the previous/next image in this case
-		{
-			if(imgList[changeImage.position] != undefined)
-				document.getElementById("fullSize").src = "img/" + imgList[changeImage.position];
-			if((changeImage.position % 5 == 4 && selector === "prevImg") || (changeImage.position % 5 == 0 && selector === "nextImg"))	// refactor logical expression		
-			{																			// 5 images in a slidebar - that means every fifth image is the last 
-				var curThumbnails = document.getElementsByClassName("thumbnail");		// position index starts at 0 though; the second argument of the outer logic sum is needed when
-				if(selector === "nextImg")											// button for displaying previous image is pressed directly after the slidebar is moved for next 5 images
-				{
-					for(var i = 4; i > -1; i--)						// iterating downwards makes it easier to manipulate image tags as required
-					{
-						if (imgList[i + changeImage.position] === undefined)
-						{
-							$(curThumbnails[i]).attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
-							// replace image with a pixel; courtesy of https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/
-							$(curThumbnails[i]).removeAttr('index');
-							continue;								// omit the current iteration
-						}
-						curThumbnails[i].src = "img/" + imgList[i + changeImage.position];
-						$(curThumbnails[i]).attr('index', changeImage.position + i);
-						// subsequently replace slidebar images
-					}
-				}
-				else
-				{
-					for(var i = 0; i < 5; i++)																		// possibly do the same as above (not necessary, though)
-					{
-						curThumbnails[i].src = "img/" + imgList[changeImage.position + (i-4)];
-						$(curThumbnails[i]).attr('index', changeImage.position + (i-4));
-					}
-				}
-			}					
+			
+			if(selector === "prevImg")
+				changeSlidebar(imgList, index, true);
+			else
+				changeSlidebar(imgList, index, false);
 		}
 		else		// the slidebar could be overflown if desired; otherwise there is nothing else to do
 		{
@@ -155,11 +177,57 @@ $(".imgNav").click													// to fix: switch from static property to index a
 	}
 );
 
+$("div.imgSlideNav").click
+(
+	function()
+	{
+		var imgList = 
+		[
+			'1.jpg', 
+			'2.jpg', 
+			'3.jpg', 
+			'4.jpg', 
+			'5.jpg',
+			'6.jpg',
+			'7.jpg',
+			'8.jpg',
+			'9.jpg',
+			'10.jpg',
+			'11.jpg',
+			'12.jpg',
+			'13.jpg',
+			'14.jpg',
+			'15.jpg',
+			'16.jpg',
+			'17.jpg',
+			'18.jpg',
+			'19.jpg'
+		];
+		var firstIndex = parseInt($("img.thumbnail").attr("index"));
+
+		if(event.target.id == "prevSlidebarImg")
+			changeSlidebar(imgList, firstIndex - 1, true);
+		else
+		{
+			if(firstIndex > imgList.length - 5)				// prevent the slidebar from getting a bunch of "empty images"
+				return;
+			changeSlidebar(imgList, firstIndex + 5, false);
+		}
+		// when faced with multiple selection, .attr() method returns the first element's result
+		// therefore, index must be increased to a value out of bounds for current slidebar selection
+		// 1 to the left (previous) is already out of bounds relative to the first element
+		// while 5 needs to be added to the first index as it is the overall number of images in slidebar
+	}
+);
+
 $("img.thumbnail").click
 (
 	function()
 	{
 		var selector = event.target;
-		document.getElementById("fullSize").src = selector.src;
+		var index = parseInt($(event.target).attr("index"));
+		var mainImg = document.getElementById("fullSize");
+		mainImg.src = selector.src;
+		$(mainImg).attr("index", $(selector).attr("index"));
 	}
 );

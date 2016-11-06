@@ -153,6 +153,14 @@ div#galleryWrap
 	/* padding adjustments to ensure same distances between thumbnails */
 	padding-top: 1vh;
 	padding-bottom: 2vh;
+	/* prevent selecting images and buttons inside the wrap */
+	/* source: http://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css/8099186#8099186 */
+	-webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 div#mainImg
 {
@@ -173,8 +181,9 @@ img.thumbnail
 {
 	width: 200px;
 	height: 160px;
-	border: 1px solid black;
-}
+	border: 1px solid black;									
+	flex-shrink: 0;					/*	prevent images from shrinking, particularly from navigation 			*/		
+}									/*	trying to grow into empty space (e.g. when the last image is empty) 	*/
 img.thumbnail:hover
 {
 	cursor: pointer;
@@ -195,7 +204,19 @@ div.imgNav
 	opacity: 0;
 	cursor: pointer;
 }
-
+div.imgSlideNav
+{
+	width: 100px;
+	height: 170px;				/* 160px of thumbnail height + (4px + 1px)*2 for border */
+	background-color: black;
+	color: #ffffff;
+	text-align: center;
+	font-size: 2em;
+	opacity: 0;
+	cursor: pointer;
+	margin-top: -4px;
+	margin-bottom: -6px;
+}
 div#prevImg
 {
 
@@ -204,6 +225,15 @@ div#nextImg
 {
 
 }
+div#prevSlidebarImg
+{
+	margin-right: 4px;
+}
+div#nextSlidebarImg
+{
+	margin-left: 4px;
+}
+
 /* review/comment page specific */
 div#commentWrap
 {
