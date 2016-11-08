@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<title>Gallery</title>	<!-- placeholder -->
+		<meta charset="utf-8" />	<!-- important metadata as arrows are not contained in standard ASCII or ISO-8859-1 charsets -->
 		<link rel="stylesheet" type="text/css" href="styles.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	</head>
@@ -17,28 +18,25 @@
 				<a class="mainNavLink" href="contactus.html">Contact Us</a>
 			</div>
 			<div id="main">
-				<div id="sideNav">
-					<a class="sideNavLink" href="#intro">Introduction</a>
-					<a class="sideNavLink" href="#section1">Section 1</a>
-					<a class="sideNavLink" href="#section2">Section 2</a>
-					<a class="sideNavLink" href="#section3">Section 3</a>
+				<div id="slides">
+						<div class="imgSlideNav" id="prevSlidebarImg">▲</div>
+						<img class="thumbnail" src="img/1.jpg" index="0" />
+						<img class="thumbnail" src="img/2.jpg" index="1" />
+						<img class="thumbnail" src="img/3.jpg" index="2" />
+						<img class="thumbnail" src="img/4.jpg" index="3" />
+						<img class="thumbnail" src="img/5.jpg" index="4" />
+						<div class="imgSlideNav" id="nextSlidebarImg">▼</div>
 				</div>
 				<div id="contentWrap">
 					<h2>Gallery</h2>
 					<div id="galleryWrap">
 						<div id="mainImg">
-							<div class="imgNav" id="prevImg">&lt;</div>
-							<img id="fullSize" src="img/1.jpg" index=0 />
-							<div class="imgNav" id="nextImg">&gt;</div>
-						</div>
-						<div id="slides">
-							<div class="imgSlideNav" id="prevSlidebarImg">&lt;</div>
-							<img class="thumbnail" src="img/1.jpg" index=0 />
-							<img class="thumbnail" src="img/2.jpg" index=1 />
-							<img class="thumbnail" src="img/3.jpg" index=2 />
-							<img class="thumbnail" src="img/4.jpg" index=3 />
-							<img class="thumbnail" src="img/5.jpg" index=4 />
-							<div class="imgSlideNav" id="nextSlidebarImg">&gt;</div>
+							<div class="imgNav" id="prevImg">◀</div>
+							<img id="fullSize" src="img/1.jpg" index="0" />
+							<div class="imgNav" id="nextImg">▶</div>
+<!--						<div class="fullScreen">
+							</div>
+							<img class="bigImage" src="img/1.jpg" /> -->
 						</div>
 					</div>
 				</div>

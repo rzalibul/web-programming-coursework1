@@ -39,10 +39,10 @@ div#mainNav
 	flex-wrap: wrap;
 	justify-content: flex-end;
 	align-items: stretch;
-	width: 79.5vw;		/* margin/padding refactoring possibly needed elsewhere */
+	width: 75vw;		/* margin/padding refactoring possibly needed elsewhere */
 	/* margin: auto 5vw auto auto; */
-	margin: auto;
-	/*margin-right: 0;*/
+	/* margin: auto; */
+	margin: auto 10vw auto 15vw;
 }
 
 a
@@ -78,13 +78,20 @@ div#main
 	/*height: auto;*/
 	flex-grow: 3;
 	margin-top: 2vh;
+	width: 75vw;
+	margin-left: -5vw;
+	padding-left: 20vw;
 }
 
 div#sideNav
 {
 	flex-grow: 1;
 	justify-content: flex-start;
-	margin: 1vh 0 1vh 1vw;	/* margin-left: 0; */
+	margin: 1vh 0 1vh -3vw;
+	/* margin-left: 0; */
+	position: fixed;
+	left: 3.5vw;
+	top: 7vh;
 }
 
 a.sideNavLink	/* refactoring possible */
@@ -97,6 +104,8 @@ a.sideNavLink	/* refactoring possible */
 	text-align: center;
 	background-color: #000000;
 	color: #ffffff;
+	padding-left: 3vw;
+	padding-right: 3vw;
 }
 
 a.sideNavLink:hover	/* refactoring possible */
@@ -114,6 +123,7 @@ div#contentWrap
 	justify-content: flex-start;
 	text-align: justify;
 	margin-bottom: 1vh;
+	font-size: medium;
 }
 
 h2
@@ -168,30 +178,70 @@ div#mainImg
 	width: 520px;
 	height: 320px;
 	margin: auto;
+	margin-top: -10vh;
 }
 div#slides
 {
-	flex-direction: row;
-	width: calc(202px * 5);			/* 5 = amount of images in the slidebar; 202px is total of width + 2 * 1px of border from both sides */
-	margin: auto;
-	margin-top: 1vh;
-	border: 4px solid black;
+	flex-direction: column;
+	height: calc(162px * 5);/* 5 = amount of images in the slidebar; 202px is total of width + 2 * 1px of border from both sides */
+	height: auto;
+	width: 202px;
+	margin-top: -1vh;
+	/*border: 4px solid black;*/
+	margin-left: -17vw;
 }
 img.thumbnail
 {
-	width: 200px;
+	width: 202px;
 	height: 160px;
-	border: 1px solid black;									
+	border: 3px solid black;
+	border-top: 1px solid black;
+	margin-left: -1px;
 	flex-shrink: 0;					/*	prevent images from shrinking, particularly from navigation 			*/		
 }									/*	trying to grow into empty space (e.g. when the last image is empty) 	*/
 img.thumbnail:hover
 {
 	cursor: pointer;
 }
+img.thumbnail:first-of-type
+{
+	border-top: 2px solid black;	/* add the remaining top border that was cut off in all other thumbnails */
+}
 img#fullSize
 {
 	width: 400px;
 	height: 320px;
+	cursor: pointer;
+}
+.fullScreen
+{
+	background-color: black;
+	position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    overflow: auto;
+	/* make it full screen */
+	opacity: 0.90;
+	z-index: 2;
+}
+.bigImage
+{
+	position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    overflow: auto;
+	margin: auto;
+	max-width: 80vw;
+	max-height: 80vh;
+	z-index: 3;
 }
 div.imgNav
 {
@@ -201,37 +251,41 @@ div.imgNav
 	color: #ffffff;
 	text-align: center;
 	font-size: 4em;
-	opacity: 0;
+	opacity: 0.5;
 	cursor: pointer;
+	position: relative;
 }
 div.imgSlideNav
 {
-	width: 100px;
-	height: 170px;				/* 160px of thumbnail height + (4px + 1px)*2 for border */
+	/*margin: auto;*/
+	padding: 0;
+	width: 200px;
+	height: 30px;				/* 160px of thumbnail height + (4px + 1px)*2 for border */
+	border: 1px solid black;
+	padding: 0 1px 0 1px;
 	background-color: black;
 	color: #ffffff;
 	text-align: center;
 	font-size: 2em;
-	opacity: 0;
+	opacity: 0.5;
 	cursor: pointer;
-	margin-top: -4px;
-	margin-bottom: -6px;
+	position: relative;
 }
 div#prevImg
 {
-
+	left: 60px;				/* width of this div which is inherited from imgNav class */
 }
 div#nextImg
 {
-
+	right: 60px;			/* width of this div which is inherited from imgNav class */
 }
 div#prevSlidebarImg
 {
-	margin-right: 4px;
+	top: 34px;					/* same as the height */
 }
 div#nextSlidebarImg
 {
-	margin-left: 4px;
+	bottom: 34px;					/* same as the height */
 }
 
 /* review/comment page specific */

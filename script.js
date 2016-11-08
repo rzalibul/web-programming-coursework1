@@ -71,7 +71,7 @@ function fetchComments()
 	$('#commentList').append(inList);
 }
 /* gallery page functionality */
-
+/*
 $(".imgNav, .imgSlideNav").hover	// to modify: make it a fade in to stop flicking
 (
 	function()
@@ -80,7 +80,7 @@ $(".imgNav, .imgSlideNav").hover	// to modify: make it a fade in to stop flickin
 		// display the navigation button when hovered and hide it when cursor stops hovering
 	}
 );
-
+*/
 function changeSlidebar(imgList, index, reverse)						// if reverse is true, then get the previous indices
 {
 	var curThumbnails = document.getElementsByClassName("thumbnail");
@@ -217,6 +217,23 @@ $("div.imgSlideNav").click
 		// therefore, index must be increased to a value out of bounds for current slidebar selection
 		// 1 to the left (previous) is already out of bounds relative to the first element
 		// while 5 needs to be added to the first index as it is the overall number of images in slidebar
+	}
+);
+
+$("img#fullSize").click
+(
+	function()
+	{
+		var src = event.target.src;
+		$("div#mainImg").append("<div class='fullScreen'></div><img class='bigImage' src='" + src + "' />");
+		$(".fullScreen, .bigImage").click				// events need to be bound here as relevant nodes are not present until they are appended
+		(
+			function()
+			{
+				$(".fullScreen").remove();
+				$(".bigImage").remove();
+			}
+		);
 	}
 );
 
