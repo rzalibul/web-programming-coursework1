@@ -47,7 +47,7 @@ function saveComment()
 		else
 			prevComments = $('#commentList').html();
 	*/
-	var curComment = prevComments + '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p><span class="date">' + Date() + '</span><br />';
+	var curComment = '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p><span class="date">' + Date() + '</span><br />' + prevComments;
 	$('#commentList').empty();
 	$('#commentList').append(curComment);
 	setObject('comments', $('#commentList').html());
@@ -81,6 +81,40 @@ $(".imgNav, .imgSlideNav").hover	// to modify: make it a fade in to stop flickin
 	}
 );
 */
+/*
+function preloadImgs()
+{
+	var imgList = 
+	[
+		'1.jpg', 
+		'2.jpg', 
+		'3.jpg', 
+		'4.jpg', 
+		'5.jpg',
+		'6.jpg',
+		'7.jpg',
+		'8.jpg',
+		'9.jpg',
+		'10.jpg',
+		'11.jpg',
+		'12.jpg',
+		'13.jpg',
+		'14.jpg',
+		'15.jpg',
+		'16.jpg',
+		'17.jpg',
+		'18.jpg',
+		'19.jpg'
+	];
+	$(imgList).each
+	(
+		function()
+		{
+			new Image().src = "img/" + this;
+		}
+	);
+}
+*/
 function changeSlidebar(imgList, index, reverse)						// if reverse is true, then get the previous indices
 {
 	var curThumbnails = document.getElementsByClassName("thumbnail");
@@ -90,35 +124,91 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 		{
 			for(var j = 0; j < 5; j++)						// possibly do the same as above (not necessary, though)
 			{
-				curThumbnails[j].src = "img/" + imgList[index + (j-4)];
-				$(curThumbnails[j]).attr('index', index + (j-4));
+				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/" + imgList[index - j] + "' index='" + (index - j) + "' />");
+				/*curThumbnails[j].src = "img/" + imgList[index + (j-4)];
+				$(curThumbnails[j]).attr('index', index + (j-4));*/
 				// subsequently replace slidebar images
 			}
+			$("img.thumbnail").css("top", "-810px");
+			$("img.thumbnail").animate
+			(
+				{
+					top: "-3vh"
+				},
+				1000,
+				function()
+				{
+					$("img.thumbnail").css("top", "-3vh");
+				}
+			);
+			
+			setTimeout
+			(
+				function()
+				{
+					for(var j = 4; j > -1; j--)
+						$(curThumbnails[5]).remove();	
+				},
+				1000
+			);
+		
 		}
 	}
 	else								// if reverse is anything but true or 1, then load next thumbnails
 	{
 		if(index % 5 == 0)
 		{
-			for(var j = 4; j > -1; j--)						// iterating downwards makes it easier to manipulate image tags as required
+			for(var j = 0; j < 5; j++)						// iterating downwards makes it easier to manipulate image tags as required
 			{
 				if (imgList[j + index] === undefined)
 				{
-					$(curThumbnails[j]).attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+					$("div#nextSlidebarImg").before("<img class='thumbnail' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' />");
 					// replace image with a transparent pixel; source: https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/
-					$(curThumbnails[j]).removeAttr('index');
-					// remove index attribute to prevent the user from displaying the transparent pixel using conventional means
 				}
 				else
 				{
-					curThumbnails[j].src = "img/" + imgList[j + index];
-					$(curThumbnails[j]).attr('index', index + j);
+					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/" + imgList[index + j] + "' index='" + (index + j) + "' />");
+					/*curThumbnails[j].src = "img/" + imgList[j + index];
+					$(curThumbnails[j]).attr('index', index + j);*/
 					// subsequently replace slidebar images
 				}
 			}
-
+			$("img.thumbnail").animate
+			(
+				{
+					top: "-810px"
+				},
+				1000,
+				function()
+				{
+					$("img.thumbnail").css("top", "-3vh");
+				}
+			);	
+			setTimeout
+			(
+				function()
+				{
+					for(var j = 0; j < 5; j++)
+						$(curThumbnails[0]).remove();
+				},
+				1000
+			);
 		}
 	}
+	
+	$("img.thumbnail").click					// need to rebind event handler as event triggers were subsequently removed and appended
+	(
+		function()
+		{
+			var selector = event.target;
+			if($(selector).attr("index") == null)
+				return;
+			var index = parseInt($(selector).attr("index"));
+			var mainImg = document.getElementById("fullSize");
+			mainImg.src = selector.src;
+			$(mainImg).attr("index", $(selector).attr("index"));
+		}
+	);
 }
 
 $(".imgNav").click
@@ -224,8 +314,8 @@ $("img#fullSize").click
 (
 	function()
 	{
-		var src = event.target.src;
-		$("div#mainImg").append("<div class='fullScreen'></div><img class='bigImage' src='" + src + "' />");
+		var imgSrc = event.target.src;
+		$("div#mainImg").append("<div class='fullScreen'></div><img class='bigImage' src='" + imgSrc + "' />");
 		$(".fullScreen, .bigImage").click				// events need to be bound here as relevant nodes are not present until they are appended
 		(
 			function()
@@ -242,7 +332,9 @@ $("img.thumbnail").click
 	function()
 	{
 		var selector = event.target;
-		var index = parseInt($(event.target).attr("index"));
+		if($(selector).attr("index") == null)
+			return;
+		var index = parseInt($(selector).attr("index"));
 		var mainImg = document.getElementById("fullSize");
 		mainImg.src = selector.src;
 		$(mainImg).attr("index", $(selector).attr("index"));
