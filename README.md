@@ -7,14 +7,14 @@ Progress:
 ----------------------------------------------------------------
 - Basic/prototyped design: done (prone to change if required)
 - Core comment functionality: done
-- Content: placeholders in effect
-- Styling: minimal; needs to be addressed soon
+- Content: done
+- Styling: done (changes may be done if needed)
 - Refactoring: must be done when the page is ready for release
 
 Specific pages:
 ----------------------------------------------------------------
-- Main page: needs content regarding certain paragraphs (more in index.html)
-- Gallery: script foundations have been put and placeholder images still in effect; whole page may need to be redesigned to accomodate thumbnails and slideshows;
-- Local activities: needs content
-- Reviews: specific styling and core finished (additional functionalities may be addressed)
+- Main page: done
+- Gallery: done; debugging, refactoring and adding additional features now
+- Local activities: done
+- Reviews: done (additional functionalities may be addressed)
 - Contact: needs content, perhaps modified styling
