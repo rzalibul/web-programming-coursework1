@@ -124,8 +124,6 @@ a.sideNavLink:hover	/* refactoring possible */
 div#contentWrap
 {
 	position: relative;
-	flex-grow: 10;
-	width: 10vw;
 	margin: 1vh 1vw 1vh 1vw;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -170,9 +168,12 @@ div#footer
 /* gallery specific */
 div#galleryWrap
 {
-	position: relative;
+	/* position: relative; */
 	top: 25vh;
+	width: 50vw;
+	height: 80vh;
 	margin: auto;
+	margin-top: 20vh;
 	/* padding adjustments to ensure same distances between thumbnails */
 	padding-top: 1vh;
 	padding-bottom: 2vh;
@@ -234,8 +235,8 @@ img.thumbnail:first-of-type
 }
 img#fullSize
 {
-	width: 400px;
-	height: 320px;
+	width: 500px;
+	height: 400px;
 	cursor: pointer;
 }
 .fullScreen
@@ -269,8 +270,8 @@ img#fullSize
 }
 div.imgNav
 {
-	width: 60px;
-	height: 320px;
+	width: 75px;
+	height: 400px;
 	background-color: black;
 	color: #ffffff;
 	text-align: center;
@@ -281,6 +282,7 @@ div.imgNav
 }
 div.imgSlideNav
 {
+	display: block;
 	/*margin: auto;*/
 	padding: 0;
 	width: 202px;
@@ -295,13 +297,21 @@ div.imgSlideNav
 	z-index: 2;
 	padding-right: 2px;
 }
+div.imgNav:hover
+{
+	opacity: 0.8;
+}
+div.imgSlideNav:hover
+{
+	opacity: 0.8;
+}
 div#prevImg
 {
-	left: 60px;				/* width of this div which is inherited from imgNav class */
+	left: 39px;				/* width of this div which is inherited from imgNav class */
 }
 div#nextImg
 {
-	right: 60px;			/* width of this div which is inherited from imgNav class */
+	right: 38px;			/* width of this div which is inherited from imgNav class */
 }
 div#prevSlidebarImg
 {
@@ -309,7 +319,7 @@ div#prevSlidebarImg
 }
 div#nextSlidebarImg
 {
-	bottom:64px;
+	top: -64px;
 }
 #slidebarAnimation
 {

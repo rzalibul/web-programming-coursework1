@@ -16,25 +16,40 @@ function clearStorage()
 	window.localStorage.clear();
 };
 
-$(document).ready
-(
-	function()
+// escape HTML characters function
+// source: http://stackoverflow.com/questions/24816/escaping-html-strings-with-jquery
+function escapeHtml(string) 
+{
+	var entityMap = 
 	{
-		if (($.browser.msie && $.browser.version < 10) || $.browser.opera) 			// ensures compatibility of disabling text selection
-			$('#galleryWrap').attr('unselectable', 'on');
-		// source: http://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css/8099186#8099186
-	}
-)
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		'"': '&quot;',
+		"'": '&#39;',
+		"/": '&#x2F;'
+	};
+	return String(string).replace
+	(
+		/[&<>"'\/]/g, 
+		function(s) 
+		{
+			return entityMap[s];
+		}
+	);
+	// perform a global match for characters in the regular expression and return the corresponding HTML escape character that is mapped in entity map
+}
 
 /* review page functionality */
 function saveComment()
 {
-	// to add: write comments with descending date order, ratings (maybe?), adding links to all comments, XSS protection
-	var cText = $('#commentBox').val();
+	// to add: ratings (maybe?), adding links to all comments
+	var cText = escapeHtml($('#commentBox').val());			// escape certain characters to prevent XSS injection
 	var cName = $('#nameBox').val();
 	if (cName === "")
 		cName = "Anonymous";
-	//alert('saveComment cName=' + cName + ' cText=' + cText);
+	else
+		cName = escapeHtml(cName);							// if it's not an empty string, escape certain characters
 	
 	var prevComments = $('#commentList').html() == '<span class="cmtName">No comments</span>' ? "" : $('#commentList').html();
 	// if there are no comments loaded, 'No comments' span element is present and in order to remove it, it needs to be checked
@@ -81,6 +96,31 @@ $(".imgNav, .imgSlideNav").hover	// to modify: make it a fade in to stop flickin
 	}
 );
 */
+function getImgList()				// return a list on calling this function for convenience
+{
+	return [
+		'1.jpg', 
+		'2.jpg', 
+		'3.jpg', 
+		'4.jpg', 
+		'5.jpg',
+		'6.jpg',
+		'7.jpg',
+		'8.jpg',
+		'9.jpg',
+		'10.jpg',
+		'11.jpg',
+		'12.jpg',
+		'13.jpg',
+		'14.jpg',
+		'15.jpg',
+		'16.jpg',
+		'17.jpg',
+		'18.jpg',
+		'19.jpg'
+	];				
+	// what use are semicolons here for in this language if I can't put a newline without breaking something (i.e. this return statement)
+}
 /*
 function preloadImgs()
 {
@@ -122,23 +162,24 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 	{
 		if(index % 5 == 4)									// 5 images in a slidebar - that means every fifth image is the last
 		{
-			for(var j = 0; j < 5; j++)						// possibly do the same as above (not necessary, though)
+			for(var j = 0; j < 5; j++)
 			{
 				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/" + imgList[index - j] + "' index='" + (index - j) + "' />");
-				/*curThumbnails[j].src = "img/" + imgList[index + (j-4)];
-				$(curThumbnails[j]).attr('index', index + (j-4));*/
-				// subsequently replace slidebar images
+				// subsequently append slidebar images
 			}
-			$("img.thumbnail").css("top", "-810px");
-			$("img.thumbnail").animate
+			$("img.thumbnail").css("top", "-810px");		
+			/* 	5 * thumbnail height which is 160px + 10px which is sum of vertical borders and take the negative to correct current position
+			 * 	as appended images are BEFORE the current ones, meaning they pushed the current ones
+			 * 	out of div#slidebar scope
+			 */
+			$("img.thumbnail").animate	// to do: add queueing
 			(
 				{
-					top: "-3vh"
+					top: "-3vh"			// absolute position of a thumbnail in relation to slidebar (look at relevant selector in styles.css)
 				},
 				1000,
 				function()
 				{
-					$("img.thumbnail").css("top", "-3vh");
 				}
 			);
 			
@@ -148,9 +189,12 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 				{
 					for(var j = 4; j > -1; j--)
 						$(curThumbnails[5]).remove();	
+				// the variable holds a reference, not an actual value, therefore after removing a node, next one moves automatically to that position
+				// additionally, the nodes we are deleting are after the ones appended, hence 5 as index
 				},
 				1000
 			);
+			// synchronise animating with removal of nodes that are no longer needed
 		
 		}
 	}
@@ -168,15 +212,13 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 				else
 				{
 					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/" + imgList[index + j] + "' index='" + (index + j) + "' />");
-					/*curThumbnails[j].src = "img/" + imgList[j + index];
-					$(curThumbnails[j]).attr('index', index + j);*/
-					// subsequently replace slidebar images
+					// subsequently append slidebar images before the next slidebar iteration button 
 				}
 			}
 			$("img.thumbnail").animate
 			(
 				{
-					top: "-810px"
+					top: "-840px"					// no clue whatsoever
 				},
 				1000,
 				function()
@@ -190,6 +232,7 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 				{
 					for(var j = 0; j < 5; j++)
 						$(curThumbnails[0]).remove();
+					// similarly to above; however, images are appended after the last current image and before next button, hence index = 0
 				},
 				1000
 			);
@@ -200,43 +243,16 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 	(
 		function()
 		{
-			var selector = event.target;
-			if($(selector).attr("index") == null)
-				return;
-			var index = parseInt($(selector).attr("index"));
-			var mainImg = document.getElementById("fullSize");
-			mainImg.src = selector.src;
-			$(mainImg).attr("index", $(selector).attr("index"));
+			changeCurImage(this);
 		}
 	);
 }
 
 $(".imgNav").click
 (
-	function changeImage()
+	function changeAdjImage()
 	{
-		var imgList = 
-		[
-			'1.jpg', 
-			'2.jpg', 
-			'3.jpg', 
-			'4.jpg', 
-			'5.jpg',
-			'6.jpg',
-			'7.jpg',
-			'8.jpg',
-			'9.jpg',
-			'10.jpg',
-			'11.jpg',
-			'12.jpg',
-			'13.jpg',
-			'14.jpg',
-			'15.jpg',
-			'16.jpg',
-			'17.jpg',
-			'18.jpg',
-			'19.jpg'
-		];
+		var imgList = getImgList();
 		// defining array of image paths
 		var selector = event.target.id;								// selector will hold the id of event trigger (prevImg or nextImg in this case)
 		var index = parseInt($("img#fullSize").attr("index"));		// get the index from the current displayed image and cast it to integer
@@ -271,28 +287,7 @@ $("div.imgSlideNav").click
 (
 	function()
 	{
-		var imgList = 
-		[
-			'1.jpg', 
-			'2.jpg', 
-			'3.jpg', 
-			'4.jpg', 
-			'5.jpg',
-			'6.jpg',
-			'7.jpg',
-			'8.jpg',
-			'9.jpg',
-			'10.jpg',
-			'11.jpg',
-			'12.jpg',
-			'13.jpg',
-			'14.jpg',
-			'15.jpg',
-			'16.jpg',
-			'17.jpg',
-			'18.jpg',
-			'19.jpg'
-		];
+		var imgList = getImgList();
 		var firstIndex = parseInt($("img.thumbnail").attr("index"));
 
 		if(event.target.id == "prevSlidebarImg")
@@ -331,12 +326,16 @@ $("img.thumbnail").click
 (
 	function()
 	{
-		var selector = event.target;
-		if($(selector).attr("index") == null)
-			return;
-		var index = parseInt($(selector).attr("index"));
-		var mainImg = document.getElementById("fullSize");
-		mainImg.src = selector.src;
-		$(mainImg).attr("index", $(selector).attr("index"));
+		changeCurImage(this);
 	}
 );
+
+function changeCurImage(selector)				// event trigger is passed by reference to this argument
+{
+	if($(selector).attr("index") == null)		// if the image does not have an index attribute, then it's not a valid image to display
+		return;
+	var index = parseInt($(selector).attr("index"));	// get the index value and cast it to int
+	var mainImg = document.getElementById("fullSize");
+	mainImg.src = selector.src;
+	$(mainImg).attr("index", index);
+}
