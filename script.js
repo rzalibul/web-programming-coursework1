@@ -43,20 +43,19 @@ function escapeHtml(string)
 /* review page functionality */
 function saveComment()
 {
-	// to add: adding links to all comments
+/*
+	var counter = parseInt(getObject('linkCounter') == null ? 0 : getObject('linkCounter'));
+	counter++;
+*/
 	var cText = escapeHtml($('#commentBox').val());			// escape certain characters to prevent XSS injection
 	var cName = $('#nameBox').val();
 	if (cName === "")
 		cName = "Anonymous";
 	else
 		cName = escapeHtml(cName);							// if it's not an empty string, escape certain characters
-	if ($('.stars.starSelected').length)
-		var rating = $('.stars.starSelected').nextAll().length + 1;
-		// nextAll() returns all nodes that are after the selected node but not including it (hence plus 1); keep in mind the order of stars is reversed in DOM for styling purposes
-	else
-		var rating = 0;
-	
+		
 	var prevComments = $('#commentList').html() == '<span class="cmtName">No comments</span>' ? "" : $('#commentList').html();
+	var prevLinks = $('#sideNav').html();
 	// if there are no comments loaded, 'No comments' span element is present and in order to remove it, it needs to be checked
 	// if it is present, assign empty string, otherwise proceed normally
 	/*
@@ -67,14 +66,23 @@ function saveComment()
 		else
 			prevComments = $('#commentList').html();
 	*/
-	$('.starSelected').removeAttr('id');			// clear the remembered rating
-	var curRating = "<div class='rating'>" + $('div#commentArea > div.rating').html().split('stars').join('') + "</div>";
-	// find the div.rating that is in the comment area, take the string and remove the stars class from the string
-	// to do: something more sophisticated to remove 'class' from the string if there is none 
+	if ($('.stars.starSelected').length)
+		var curRating = "<div class='rating'>" + $('div#commentArea > div.rating').html().split('stars').join('') + "</div>";
+		// find the div.rating that is in the comment area, take the string and remove the stars class from the string
+		// to do: something more sophisticated to remove 'class' from the string if there is none 
+	else
+		var curRating = "<p>No rating</p>";
+/*	var linkId = 'cmt_' + (Date.now() - 1478966448771);*/
 	var curComment = '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p>' + 'Rating:' + curRating + '<span class="date">' + Date() + '</span><br />' + prevComments;
+/*	var curLinks = '<a class="sideNavLink" href=#' + linkId + '>Comment #' + counter + '</a>' + prevLinks;*/
 	$('#commentList').empty();
 	$('#commentList').append(curComment);
+/*	$('#sideNav').empty();
+	$('#sideNav').append(curLinks); */
+	$('.stars.starSelected').removeClass('starSelected');			// clear the remembered rating from the commenting area
 	setObject('comments', $('#commentList').html());
+/*	setObject('links', $('#sideNav').html());
+	setObject('linkCounter', counter);*/
 }
 
 function clearComment()
@@ -87,12 +95,19 @@ function clearComment()
 
 function fetchComments()
 {
-	// to add: load comments with descending date order (from the most recent to the least recent)
 	var inList = getObject('comments');
 	if (inList == null)
 		inList = '<span class="cmtName">No comments</span>';
 	$('#commentList').empty();
 	$('#commentList').append(inList);
+	
+/*	inList = getObject('links');
+	if(!(inList == null))
+	{
+		$('#sideNav').empty();
+		$('#sideNav').append(inList);
+	}
+*/
 }
 
 $('span.stars').click
@@ -267,6 +282,24 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 	);
 }
 
+$("img.thumbnail").click
+(
+	function()
+	{
+		changeCurImage(this);
+	}
+);
+
+function changeCurImage(selector)				// event trigger is passed by reference to this argument
+{
+	if($(selector).attr("index") == null)		// if the image does not have an index attribute, then it's not a valid image to display
+		return;
+	var index = parseInt($(selector).attr("index"));	// get the index value and cast it to int
+	var mainImg = document.getElementById("fullSize");
+	mainImg.src = selector.src;
+	$(mainImg).attr("index", index);
+}
+
 $(".imgNav").click
 (
 	function changeAdjImage()
@@ -340,21 +373,3 @@ $("img#fullSize").click
 		);
 	}
 );
-
-$("img.thumbnail").click
-(
-	function()
-	{
-		changeCurImage(this);
-	}
-);
-
-function changeCurImage(selector)				// event trigger is passed by reference to this argument
-{
-	if($(selector).attr("index") == null)		// if the image does not have an index attribute, then it's not a valid image to display
-		return;
-	var index = parseInt($(selector).attr("index"));	// get the index value and cast it to int
-	var mainImg = document.getElementById("fullSize");
-	mainImg.src = selector.src;
-	$(mainImg).attr("index", index);
-}

@@ -16,5 +16,5 @@ Specific pages:
 - Main page: done
 - Gallery: done; debugging, refactoring and adding additional features now
 - Local activities: done
-- Reviews: done; ratings have been introduced
+- Reviews: done (additional functionalities may be addressed)
 - Contact: needs content, perhaps modified styling
