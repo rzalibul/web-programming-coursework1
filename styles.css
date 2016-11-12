@@ -48,7 +48,6 @@ div#mainNav
 	/* margin: auto 5vw auto auto; */
 	/* margin: auto; */
 	margin: auto 10vw auto 15vw;
-	z-index: 100;
 }
 
 a
@@ -87,6 +86,7 @@ div#main
 	flex-grow: 3;
 	margin-top: 2vh;
 	width: 75vw;
+	min-height: 80vh;	/* make sure all content will be displayed, especially the footer */
 	margin-left: -5vw;
 	padding-left: 20vw;
 	z-index: 4;
@@ -123,6 +123,7 @@ a.sideNavLink:hover	/* refactoring possible */
 
 div#contentWrap
 {
+	width: inherit;			/* IE fix; apparently it does not inherit values from the parent node */
 	position: relative;
 	margin: 1vh 1vw 1vh 1vw;
 	flex-direction: column;
@@ -134,6 +135,7 @@ div#contentWrap
 img.introImg
 {
 	margin: auto;
+	width: 20vw;
 	max-width: 50vw;
 }
 h2
@@ -171,9 +173,9 @@ div#galleryWrap
 	/* position: relative; */
 	top: 25vh;
 	width: 50vw;
-	height: 80vh;
+	height: auto;
 	margin: auto;
-	margin-top: 20vh;
+	margin-top: 10vh;
 	/* padding adjustments to ensure same distances between thumbnails */
 	padding-top: 1vh;
 	padding-bottom: 2vh;
@@ -188,10 +190,9 @@ div#galleryWrap
 div#mainImg
 {
 	flex-direction: row;
-	width: 520px;
-	height: 320px;
+	width: 590px;
+	height: 160px;
 	margin: auto;
-	margin-top: -10vh;
 }
 div#slides
 {
@@ -270,7 +271,7 @@ img#fullSize
 }
 div.imgNav
 {
-	width: 75px;
+	width: 45px;
 	height: 400px;
 	background-color: black;
 	color: #ffffff;
@@ -307,11 +308,11 @@ div.imgSlideNav:hover
 }
 div#prevImg
 {
-	left: 39px;				/* width of this div which is inherited from imgNav class */
+	left: 45px;			/* push by width of this div which is inherited from imgNav class */
 }
 div#nextImg
 {
-	right: 38px;			/* width of this div which is inherited from imgNav class */
+	right: 45px;		/* push by width of this div which is inherited from imgNav class */
 }
 div#prevSlidebarImg
 {
