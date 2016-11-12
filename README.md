@@ -23,3 +23,4 @@ Other:
 ---------------------------------------------------------------
 - fix IE bug where text on links goes out of the scope of buttons
 - add alt attribute values to images (required for HTML5 validation!)
+- correct the Google Maps embedding (part of contact-specific requirement)
