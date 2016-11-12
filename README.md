@@ -16,5 +16,9 @@ Specific pages:
 - Main page: done
 - Gallery: done; debugging, refactoring and adding additional features now
 - Local activities: done
-- Reviews: done (additional functionalities may be addressed)
+- Reviews: done! (links aren't feasible)
 - Contact: needs content, perhaps modified styling
+
+Other:
+---------------------------------------------------------------
+- fix IE bug where text on links goes out of the scope of buttons
