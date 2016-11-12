@@ -43,13 +43,18 @@ function escapeHtml(string)
 /* review page functionality */
 function saveComment()
 {
-	// to add: ratings (maybe?), adding links to all comments
+	// to add: adding links to all comments
 	var cText = escapeHtml($('#commentBox').val());			// escape certain characters to prevent XSS injection
 	var cName = $('#nameBox').val();
 	if (cName === "")
 		cName = "Anonymous";
 	else
 		cName = escapeHtml(cName);							// if it's not an empty string, escape certain characters
+	if ($('.stars.starSelected').length)
+		var rating = $('.stars.starSelected').nextAll().length + 1;
+		// nextAll() returns all nodes that are after the selected node but not including it (hence plus 1); keep in mind the order of stars is reversed in DOM for styling purposes
+	else
+		var rating = 0;
 	
 	var prevComments = $('#commentList').html() == '<span class="cmtName">No comments</span>' ? "" : $('#commentList').html();
 	// if there are no comments loaded, 'No comments' span element is present and in order to remove it, it needs to be checked
@@ -62,7 +67,11 @@ function saveComment()
 		else
 			prevComments = $('#commentList').html();
 	*/
-	var curComment = '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p><span class="date">' + Date() + '</span><br />' + prevComments;
+	$('.starSelected').removeAttr('id');			// clear the remembered rating
+	var curRating = "<div class='rating'>" + $('div#commentArea > div.rating').html().split('stars').join('') + "</div>";
+	// find the div.rating that is in the comment area, take the string and remove the stars class from the string
+	// to do: something more sophisticated to remove 'class' from the string if there is none 
+	var curComment = '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p>' + 'Rating:' + curRating + '<span class="date">' + Date() + '</span><br />' + prevComments;
 	$('#commentList').empty();
 	$('#commentList').append(curComment);
 	setObject('comments', $('#commentList').html());
@@ -85,6 +94,16 @@ function fetchComments()
 	$('#commentList').empty();
 	$('#commentList').append(inList);
 }
+
+$('span.stars').click
+(
+	function()
+	{
+		$('span.stars.starSelected').removeClass('starSelected');
+		$(event.target).addClass('starSelected');
+	}
+);
+
 /* gallery page functionality */
 /*
 $(".imgNav, .imgSlideNav").hover	// to modify: make it a fade in to stop flicking
