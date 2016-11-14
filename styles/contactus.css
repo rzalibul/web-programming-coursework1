@@ -16,3 +16,7 @@ div#map
 	float: left;
 	justify-content: flex-start;
 }
+iframe
+{
+	border: 0;
+}

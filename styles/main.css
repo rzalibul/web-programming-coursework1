@@ -28,7 +28,6 @@ div#wrap
 	background-color: #ffffff;
 	color: #000000;
 	position: relative;
-	z-index: 2;
 }
 div#header
 {
@@ -43,10 +42,8 @@ div#mainNav
 	flex-wrap: wrap;
 	justify-content: flex-end;
 	align-items: stretch;
-	width: 75vw;		/* margin/padding refactoring possibly needed elsewhere */
+	width: 75vw;
 	height: auto;
-	/* margin: auto 5vw auto auto; */
-	/* margin: auto; */
 	margin: auto 10vw auto 15vw;
 }
 
@@ -81,8 +78,6 @@ div#main
 	position: relative;
 	flex-direction: row;
 	justify-content: center;
-	/*min-height: 65vh;*/
-	/*height: auto;*/
 	flex-grow: 3;
 	margin-top: 2vh;
 	width: 75vw;
@@ -94,18 +89,18 @@ div#main
 
 div#sideNav
 {
+	width: 15vw;
 	margin: 1vh 0 1vh -3vw;
-	/* margin-left: 0; */
 	position: fixed;
 	left: 3.5vw;
 	top: 7vh;
 }
 
-a.sideNavLink	/* refactoring possible */
+a.sideNavLink
 {
 	flex-basis: 5vh;
 	line-height: 5vh;
-	font-size: medium;
+	font-size: medium;%%%
 	padding-top: 2vh;
 	padding-bottom: 2vh;
 	text-align: center;
@@ -115,7 +110,7 @@ a.sideNavLink	/* refactoring possible */
 	padding-right: 3vw;
 }
 
-a.sideNavLink:hover	/* refactoring possible */
+a.sideNavLink:hover
 {
 	background-color: #ffffff;
 	color: #000000;
@@ -163,6 +158,4 @@ div#footer
 	margin-bottom: auto;
 	flex-grow: 0.1;
 	text-align: center;
-	/* background-color: #f1faaf; */
-	/* color: #7f8b1b; */
 }
