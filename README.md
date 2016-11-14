@@ -9,12 +9,12 @@ Progress:
 - Core comment functionality: done
 - Content: done
 - Styling: done (changes may be done if needed)
-- Refactoring: must be done when the page is ready for release
+- Refactoring: some
 
 Specific pages:
 ----------------------------------------------------------------
 - Main page: done
-- Gallery: done; debugging, refactoring and adding additional features now
+- Gallery: done; one bug still need to be fixed
 - Local activities: done
 - Reviews: done! (links aren't feasible)
 - Contact: needs content, perhaps modified styling
@@ -22,6 +22,5 @@ Specific pages:
 Other:
 ---------------------------------------------------------------
 - fix IE bug where text on links goes out of the scope of buttons
-- add alt attribute values to images (required for HTML5 validation!)
 - correct the Google Maps embedding (part of contact-specific requirement)
 - fix gallery slidebar to prevent from starting an animation when one is already going on
