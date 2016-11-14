@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Gallery</title>	<!-- placeholder -->
+		<title>Gallery</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="styles/main.css" />
 		<link rel="stylesheet" type="text/css" href="styles/gallery.css" />
@@ -9,8 +9,6 @@
 	</head>
 	<body>
 		<div id="wrap">
-			<!-- <div id="header">
-			</div> -->
 			<div id="mainNav">
 				<a class="mainNavLink" href="index.html">Main Page</a>
 				<a class="mainNavLink" href="gallery.html">Gallery</a>
@@ -21,11 +19,12 @@
 			<div id="main">
 				<div id="slides">
 					<div class="imgSlideNav" id="prevSlidebarImg">▲</div>
-					<img class="thumbnail" src="img/1.jpg" index="0" />
-					<img class="thumbnail" src="img/2.jpg" index="1" />
-					<img class="thumbnail" src="img/3.jpg" index="2" />
-					<img class="thumbnail" src="img/4.jpg" index="3" />
-					<img class="thumbnail" src="img/5.jpg" index="4" />
+					<!-- using longdesc as an index counter -->
+					<img class="thumbnail" src="img/1.jpg" alt="Image 1" longdesc="0" />
+					<img class="thumbnail" src="img/2.jpg" alt="Image 2" longdesc="1" />
+					<img class="thumbnail" src="img/3.jpg" alt="Image 3" longdesc="2" />
+					<img class="thumbnail" src="img/4.jpg" alt="Image 4" longdesc="3" />
+					<img class="thumbnail" src="img/5.jpg" alt="Image 5" longdesc="4" />
 					<div class="imgSlideNav" id="nextSlidebarImg">▼</div>
 				</div>
 				<div id="contentWrap">
@@ -33,7 +32,7 @@
 					<div id="galleryWrap">
 						<div id="mainImg">
 							<div class="imgNav" id="prevImg">◀</div>
-							<img id="fullSize" src="img/1.jpg" index="0" />
+							<img id="fullSize" src="img/1.jpg" alt="Image 1" longdesc="0" />
 							<div class="imgNav" id="nextImg">▶</div>
 <!--						<div class="fullScreen">
 							</div>

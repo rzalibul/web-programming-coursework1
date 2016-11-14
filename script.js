@@ -43,10 +43,6 @@ function escapeHtml(string)
 /* review page functionality */
 function saveComment()
 {
-/*
-	var counter = parseInt(getObject('linkCounter') == null ? 0 : getObject('linkCounter'));
-	counter++;
-*/
 	var cText = escapeHtml($('#commentBox').val());			// escape certain characters to prevent XSS injection
 	var cName = $('#nameBox').val();
 	if (cName === "")
@@ -72,22 +68,16 @@ function saveComment()
 		// to do: something more sophisticated to remove 'class' from the string if there is none 
 	else
 		var curRating = "<p>No rating</p>";
-/*	var linkId = 'cmt_' + (Date.now() - 1478966448771);*/
 	var curComment = '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p>' + 'Rating:' + curRating + '<span class="date">' + Date() + '</span><br />' + prevComments;
-/*	var curLinks = '<a class="sideNavLink" href=#' + linkId + '>Comment #' + counter + '</a>' + prevLinks;*/
 	$('#commentList').empty();
 	$('#commentList').append(curComment);
-/*	$('#sideNav').empty();
-	$('#sideNav').append(curLinks); */
 	$('.stars.starSelected').removeClass('starSelected');			// clear the remembered rating from the commenting area
 	setObject('comments', $('#commentList').html());
-/*	setObject('links', $('#sideNav').html());
-	setObject('linkCounter', counter);*/
 }
 
 function clearComment()
 {
-	if($("#commentBox").val() == "THERE IS NO COW LEVEL")
+	if($("#commentBox").val() == "CLR STORAGE")
 		clearStorage();
 	$("#nameBox").val("");
 	$("#commentBox").val("");
@@ -100,17 +90,9 @@ function fetchComments()
 		inList = '<span class="cmtName">No comments</span>';
 	$('#commentList').empty();
 	$('#commentList').append(inList);
-	
-/*	inList = getObject('links');
-	if(!(inList == null))
-	{
-		$('#sideNav').empty();
-		$('#sideNav').append(inList);
-	}
-*/
 }
 
-$('span.stars').click
+$('span.stars').click				// selects a particular rating on click
 (
 	function()
 	{
@@ -120,17 +102,7 @@ $('span.stars').click
 );
 
 /* gallery page functionality */
-/*
-$(".imgNav, .imgSlideNav").hover	// to modify: make it a fade in to stop flicking
-(
-	function()
-	{
-		$(this).css("opacity") == "0" ? $(this).css("opacity", "1") : $(this).css("opacity", "0");	
-		// display the navigation button when hovered and hide it when cursor stops hovering
-	}
-);
-*/
-function getImgList()				// return a list on calling this function for convenience
+function getImgList()				// returns a list of images
 {
 	return [
 		'1.jpg', 
@@ -152,43 +124,9 @@ function getImgList()				// return a list on calling this function for convenien
 		'17.jpg',
 		'18.jpg',
 		'19.jpg'
-	];				
-	// what use are semicolons here for in this language if I can't put a newline without breaking something (i.e. this return statement)
-}
-/*
-function preloadImgs()
-{
-	var imgList = 
-	[
-		'1.jpg', 
-		'2.jpg', 
-		'3.jpg', 
-		'4.jpg', 
-		'5.jpg',
-		'6.jpg',
-		'7.jpg',
-		'8.jpg',
-		'9.jpg',
-		'10.jpg',
-		'11.jpg',
-		'12.jpg',
-		'13.jpg',
-		'14.jpg',
-		'15.jpg',
-		'16.jpg',
-		'17.jpg',
-		'18.jpg',
-		'19.jpg'
 	];
-	$(imgList).each
-	(
-		function()
-		{
-			new Image().src = "img/" + this;
-		}
-	);
 }
-*/
+
 function changeSlidebar(imgList, index, reverse)						// if reverse is true, then get the previous indices
 {
 	var curThumbnails = document.getElementsByClassName("thumbnail");
@@ -198,7 +136,7 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 		{
 			for(var j = 0; j < 5; j++)
 			{
-				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/" + imgList[index - j] + "' index='" + (index - j) + "' />");
+				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/" + imgList[index - j] + "' alt='Image " + (index - j + 1) + "' longdesc='" + (index - j) + "' />");
 				// subsequently append slidebar images
 			}
 			$("img.thumbnail").css("top", "-810px");		
@@ -240,12 +178,12 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 			{
 				if (imgList[j + index] === undefined)
 				{
-					$("div#nextSlidebarImg").before("<img class='thumbnail' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' />");
+					$("div#nextSlidebarImg").before("<img class='thumbnail' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' alt='Pixel' />");
 					// replace image with a transparent pixel; source: https://css-tricks.com/snippets/html/base64-encode-of-1x1px-transparent-gif/
 				}
 				else
 				{
-					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/" + imgList[index + j] + "' index='" + (index + j) + "' />");
+					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/" + imgList[index + j] + "' alt='Image " + (index + j + 1) +  "' longdesc='" + (index + j) + "' />");
 					// subsequently append slidebar images before the next slidebar iteration button 
 				}
 			}
@@ -292,12 +230,12 @@ $("img.thumbnail").click
 
 function changeCurImage(selector)				// event trigger is passed by reference to this argument
 {
-	if($(selector).attr("index") == null)		// if the image does not have an index attribute, then it's not a valid image to display
+	if($(selector).attr("longdesc") == null)		// if the image does not have an 'index' attribute, then it's not a valid image to display
 		return;
-	var index = parseInt($(selector).attr("index"));	// get the index value and cast it to int
+	var index = parseInt($(selector).attr("longdesc"));	// get the index value and cast it to int
 	var mainImg = document.getElementById("fullSize");
 	mainImg.src = selector.src;
-	$(mainImg).attr("index", index);
+	$(mainImg).attr("longdesc", index);
 }
 
 $(".imgNav").click
@@ -307,8 +245,8 @@ $(".imgNav").click
 		var imgList = getImgList();
 		// defining array of image paths
 		var selector = event.target.id;								// selector will hold the id of event trigger (prevImg or nextImg in this case)
-		var index = parseInt($("img#fullSize").attr("index"));		// get the index from the current displayed image and cast it to integer
-		//console.log("index = " + index);
+		var index = parseInt($("img#fullSize").attr("longdesc"));	// get the 'index' from the current displayed image and cast it to integer
+
 		if(selector === "prevImg")
 			index--;
 		else														
@@ -320,7 +258,8 @@ $(".imgNav").click
 			{
 				var mainImg = document.getElementById("fullSize");
 				mainImg.src = "img/" + imgList[index];
-				$(mainImg).attr("index", index);			
+				$(mainImg).attr("longdesc", index);
+				$(mainImg).attr("alt", "Image " + (index + 1));
 			}
 			
 			if(selector === "prevImg")
@@ -340,7 +279,7 @@ $("div.imgSlideNav").click
 	function()
 	{
 		var imgList = getImgList();
-		var firstIndex = parseInt($("img.thumbnail").attr("index"));
+		var firstIndex = parseInt($("img.thumbnail").attr("longdesc"));
 
 		if(event.target.id == "prevSlidebarImg")
 			changeSlidebar(imgList, firstIndex - 1, true);
@@ -362,7 +301,7 @@ $("img#fullSize").click
 	function()
 	{
 		var imgSrc = event.target.src;
-		$("div#mainImg").append("<div class='fullScreen'></div><img class='bigImage' src='" + imgSrc + "' />");
+		$("div#mainImg").append("<div class='fullScreen'></div><img class='bigImage' src='" + imgSrc + "' alt='Full Screen " + event.target.alt + "' />");
 		$(".fullScreen, .bigImage").click				// events need to be bound here as relevant nodes are not present until they are appended
 		(
 			function()
