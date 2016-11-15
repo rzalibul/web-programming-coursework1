@@ -94,7 +94,7 @@ function fetchComments()
 
 $('span.stars').click				// selects a particular rating on click
 (
-	function()
+	function(event)
 	{
 		$('span.stars.starSelected').removeClass('starSelected');
 		$(event.target).addClass('starSelected');
@@ -240,11 +240,11 @@ function changeCurImage(selector)				// event trigger is passed by reference to 
 
 $(".imgNav").click
 (
-	function changeAdjImage()
+	function changeAdjImage(event)
 	{
 		var imgList = getImgList();
 		// defining array of image paths
-		var selector = event.target.id;								// selector will hold the id of event trigger (prevImg or nextImg in this case)
+		var selector = event.target.id;								// selector will hold the id of event object (prevImg or nextImg in this case)
 		var index = parseInt($("img#fullSize").attr("longdesc"));	// get the 'index' from the current displayed image and cast it to integer
 
 		if(selector === "prevImg")
@@ -276,7 +276,7 @@ $(".imgNav").click
 
 $("div.imgSlideNav").click
 (
-	function()
+	function(event)
 	{
 		var imgList = getImgList();
 		var firstIndex = parseInt($("img.thumbnail").attr("longdesc"));
@@ -298,7 +298,7 @@ $("div.imgSlideNav").click
 
 $("img#fullSize").click
 (
-	function()
+	function(event)
 	{
 		var imgSrc = event.target.src;
 		$("div#mainImg").append("<div class='fullScreen'></div><img class='bigImage' src='" + imgSrc + "' alt='Full Screen " + event.target.alt + "' />");

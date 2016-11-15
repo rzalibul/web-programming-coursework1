@@ -1,6 +1,7 @@
 /* contact page specific */
 div#contentWrap
 {
+	/* override main CSS styles*/
 	flex-direction: row;
 }
 div#contactInfo
@@ -19,4 +20,6 @@ div#map
 iframe
 {
 	border: 0;
+	width: 600px;
+	height: 450px;
 }

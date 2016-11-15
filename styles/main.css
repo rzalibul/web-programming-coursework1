@@ -11,6 +11,12 @@ div
 	/* border: 1px black solid; */
 	/* preperaing flexbox */
 	/* all code regarding flexbox based on: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+	/* display: -webkit-flex; */
+    /* display: -webkit-box; */
+    /* display: -moz-flex; */
+    /* display: -moz-box; */
+    /* display: -ms-flexbox; */
+	/* prefixes are available but on most browsers that need them (so deprecated versions), there are a lot of bugs (i.e. Safari 5.1.7) */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -29,13 +35,13 @@ div#wrap
 	color: #000000;
 	position: relative;
 }
-div#header
-{
-	width: 80vw;
-	height: 10vh;
-	margin: auto;
-	margin-bottom: 2vh;
-}
+/* div#header */
+/* { */
+	/* width: 80vw; */
+	/* height: 10vh; */
+	/* margin: auto; */
+	/* margin-bottom: 2vh; */
+/* } */
 div#mainNav
 {
 	flex-direction: row;
