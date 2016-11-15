@@ -130,24 +130,26 @@ function getImgList()				// returns a list of images
 function changeSlidebar(imgList, index, reverse)						// if reverse is true, then get the previous indices
 {
 	var curThumbnails = document.getElementsByClassName("thumbnail");
+	var transitionDistance = 126 * 5 + 10;
+	/* 	5 * thumbnail height which is 126px + 10px which is sum of vertical borders and take the negative to correct current position
+	 * 	as appended images are BEFORE the current ones, meaning they pushed the current ones
+	 * 	out of div#slidebar scope
+	 */
 	if(reverse)
 	{
 		if(index % 5 == 4)									// 5 images in a slidebar - that means every fifth image is the last
 		{
 			for(var j = 0; j < 5; j++)
 			{
-				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/" + imgList[index - j] + "' alt='Image " + (index - j + 1) + "' longdesc='" + (index - j) + "' />");
+				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/thumbnails/thumbnail_" + imgList[index - j] + "' alt='Image " + (index - j + 1) + "' longdesc='" + (index - j) + "' />");
 				// subsequently append slidebar images
 			}
-			$("img.thumbnail").css("top", "-810px");		
-			/* 	5 * thumbnail height which is 160px + 10px which is sum of vertical borders and take the negative to correct current position
-			 * 	as appended images are BEFORE the current ones, meaning they pushed the current ones
-			 * 	out of div#slidebar scope
-			 */
+			$("img.thumbnail").css("top", -transitionDistance + "px");		
+
 			$("img.thumbnail").animate	// to do: add queueing
 			(
 				{
-					top: "-3vh"			// absolute position of a thumbnail in relation to slidebar (look at relevant selector in styles.css)
+					top: "-32px"			// absolute position of a thumbnail in relation to slidebar (look at relevant selector in styles.css)
 				},
 				1000,
 				function()
@@ -183,19 +185,19 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 				}
 				else
 				{
-					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/" + imgList[index + j] + "' alt='Image " + (index + j + 1) +  "' longdesc='" + (index + j) + "' />");
+					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/thumbnails/thumbnail_" + imgList[index + j] + "' alt='Image " + (index + j + 1) +  "' longdesc='" + (index + j) + "' />");
 					// subsequently append slidebar images before the next slidebar iteration button 
 				}
 			}
 			$("img.thumbnail").animate
 			(
 				{
-					top: "-840px"					// no clue whatsoever
+					top: -(transitionDistance + 32) + "px"					// 760px + height of a button
 				},
 				1000,
 				function()
 				{
-					$("img.thumbnail").css("top", "-3vh");
+					$("img.thumbnail").css("top", "-32px");
 				}
 			);	
 			setTimeout
@@ -234,7 +236,7 @@ function changeCurImage(selector)				// event trigger is passed by reference to 
 		return;
 	var index = parseInt($(selector).attr("longdesc"));	// get the index value and cast it to int
 	var mainImg = document.getElementById("fullSize");
-	mainImg.src = selector.src;
+	mainImg.src = selector.src.split("/thumbnails/thumbnail_").join("/");
 	$(mainImg).attr("longdesc", index);
 }
 

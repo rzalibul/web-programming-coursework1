@@ -27,13 +27,12 @@ div#mainImg
 }
 div#slides
 {
+	background-color: gray;
 	display: block;
 	position: absolute;
-	top: -2vh;
-	left: 3vw;
-	height: calc(160px * 5 + 15px); /* 5 = amount of images in the slidebar; 160px is height of thumbnail and 15px is the total of vertical borders */
-	width: 207px;
-	margin-bottom: -3px;
+	left: 5vw;
+	height: calc(126px * 5 + 10px); /* 5 = amount of images in the slidebar; 160px is height of thumbnail and 15px is the total of vertical borders/white-spaces */
+	width: 168px;
 	/* prevent selecting images and buttons inside the wrap */
 	/* source: http://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css/8099186#8099186 */
 	-webkit-user-select: none;
@@ -46,13 +45,9 @@ div#slides
 img.thumbnail
 {
 	position: relative;
-	top: -3vh;
-	width: 202px;
-	height: 160px;
-	border: 3px solid black;
-	border-top: 1px solid black;
-	margin-left: -1px;
-	margin-top: -5px;
+	top: -32px;
+	width: 168px;
+	height: 126px;		/* maintain aspect ratio of 4:3 */
 }			
 						
 img.thumbnail:hover
@@ -61,13 +56,12 @@ img.thumbnail:hover
 }
 img.thumbnail:first-of-type
 {
-	border-top: 3px solid black;	/* add the remaining top border that was cut off in all other thumbnails */
+	/*border-top: 3px solid black;	/* add the remaining top border that was cut off in all other thumbnails */
 }
-
 img#fullSize
 {
-	width: 500px;
-	height: 400px;
+	width: 400px;
+	height: 300px;
 	cursor: pointer;
 }
 .fullScreen
@@ -102,7 +96,7 @@ img#fullSize
 div.imgNav
 {
 	width: 45px;
-	height: 400px;
+	height: 300px;
 	background-color: black;
 	color: #ffffff;
 	text-align: center;
@@ -114,7 +108,7 @@ div.imgNav
 div.imgSlideNav
 {
 	padding: 0;
-	max-width: 202px;
+	width: 166px;
 	height: 32px;
 	background-color: black;
 	color: #ffffff;
@@ -125,7 +119,6 @@ div.imgSlideNav
 	position: relative;
 	z-index: 2;
 	padding-right: 2px;
-	word-wrap: nowrap;
 }
 div.imgNav:hover
 {

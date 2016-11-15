@@ -1,4 +1,17 @@
 /* review/comment page specific */
+div#sideNav
+{
+	/* override top margin to position the element better */
+	margin-top: 40vh;
+	/* disable text selection */
+	-webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+	/* add a pointer cursor */
+	cursor: pointer;
+}
 div#commentWrap
 {
 	
