@@ -31,7 +31,6 @@ div#wrap
 	/* setting default font */
 	font-family: Arial;
 	font-size: small;
-	background-color: #ffffff;
 	color: #000000;
 	position: relative;
 }
@@ -51,6 +50,7 @@ div#mainNav
 	width: 75vw;
 	height: auto;
 	margin: auto 10vw auto 15vw;
+	font-size: medium;
 }
 
 a
@@ -64,7 +64,6 @@ a.mainNavLink
 	padding-bottom: 2.5vh;
 	/* center vertically */
 	flex-grow: 1;
-	font-size: medium;
 	margin: auto;	/* center all elements */
 	text-align: center; /* center text */
 	background-color: #000000;
@@ -93,6 +92,7 @@ div#main
 
 div#sideNav
 {
+	font-size: medium;
 	width: 15vw;
 	margin: 1vh 0 1vh 0;
 	position: fixed;
@@ -104,7 +104,6 @@ a.sideNavLink
 {
 	padding-top: 2.5vh;
 	padding-bottom: 2.5vh;
-	font-size: medium;
 	text-align: center;
 	background-color: #000000;
 	color: #ffffff;
@@ -158,4 +157,15 @@ div#footer
 	margin-bottom: auto;
 	flex-grow: 0.1;
 	text-align: center;
+}
+
+div#accessibility
+{
+	
+}
+
+span.change
+{
+	text-decoration: underline;
+	cursor: pointer;
 }

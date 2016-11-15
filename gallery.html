@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<title>Gallery</title>
-		<meta charset="utf-8" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<link rel="stylesheet" type="text/css" href="styles/main.css" />
 		<link rel="stylesheet" type="text/css" href="styles/gallery.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -20,11 +20,11 @@
 				<div id="slides">
 					<div class="imgSlideNav" id="prevSlidebarImg">▲</div>
 					<!-- using longdesc as an index counter -->
-					<img class="thumbnail" src="img/thumbnails/thumbnail_1.jpg" alt="Image 1" longdesc="0" />
-					<img class="thumbnail" src="img/thumbnails/thumbnail_2.jpg" alt="Image 2" longdesc="1" />
-					<img class="thumbnail" src="img/thumbnails/thumbnail_3.jpg" alt="Image 3" longdesc="2" />
-					<img class="thumbnail" src="img/thumbnails/thumbnail_4.jpg" alt="Image 4" longdesc="3" />
-					<img class="thumbnail" src="img/thumbnails/thumbnail_5.jpg" alt="Image 5" longdesc="4" />
+					<img class="thumbnail" src="img/thumbnails/thumbnail_1.jpg" alt="Miniature Image 1" longdesc="0" />
+					<img class="thumbnail" src="img/thumbnails/thumbnail_2.jpg" alt="Miniature Image 2" longdesc="1" />
+					<img class="thumbnail" src="img/thumbnails/thumbnail_3.jpg" alt="Miniature Image 3" longdesc="2" />
+					<img class="thumbnail" src="img/thumbnails/thumbnail_4.jpg" alt="Miniature Image 4" longdesc="3" />
+					<img class="thumbnail" src="img/thumbnails/thumbnail_5.jpg" alt="Miniature Image 5" longdesc="4" />
 					<div class="imgSlideNav" id="nextSlidebarImg">▼</div>
 				</div>
 				<div id="contentWrap">
@@ -43,6 +43,13 @@
 			</div>
 			<div id="footer">
 				<p id="footnote">Created by Adrian Wesolowski. Last modified on 15/11/2016.</p>
+				<div id="accessibility">
+					<!-- <p class="mainText">Change font: <span class="change">large</span>&nbsp;<span class="change">small</span></p> -->
+					<!-- font manipulation is not necessary here -->
+					<span class="change"></span><span class="change"></span>
+					<!-- the best solution to keep the number of span.change constant -->
+					<p class="mainText">Change colour scheme: <span class="change">normal</span>&nbsp;<span class="change">high contrast</span></p>
+				</div>
 			</div>
 		</div>
 		<script src="script.js"></script>

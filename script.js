@@ -45,6 +45,8 @@ function saveComment()
 {
 	var cText = escapeHtml($('#commentBox').val());			// escape certain characters to prevent XSS injection
 	var cName = $('#nameBox').val();
+	if (cText === "")
+		return;												// don't add empty comments
 	if (cName === "")
 		cName = "Anonymous";
 	else
@@ -68,7 +70,7 @@ function saveComment()
 		// to do: something more sophisticated to remove 'class' from the string if there is none 
 	else
 		var curRating = "<p>No rating</p>";
-	var curComment = '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p>' + 'Rating:' + curRating + '<span class="date">' + Date() + '</span><br />' + prevComments;
+	var curComment = '<span class="cmtName">' + cName + ' says:' + '</span><p class="comment">' + cText + '</p>' + 'Rating:' + curRating + '<span class="date">' + Date() + '</span><br />' + prevComments.split('style=').join();	   // remove inline styling to standardise the styles
 	$('#commentList').empty();
 	$('#commentList').append(curComment);
 	$('.stars.starSelected').removeClass('starSelected');			// clear the remembered rating from the commenting area
@@ -141,12 +143,12 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 		{
 			for(var j = 0; j < 5; j++)
 			{
-				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/thumbnails/thumbnail_" + imgList[index - j] + "' alt='Image " + (index - j + 1) + "' longdesc='" + (index - j) + "' />");
+				$("div#prevSlidebarImg").after("<img class='thumbnail' src='img/thumbnails/thumbnail_" + imgList[index - j] + "' alt='Miniature Image " + (index - j + 1) + "' longdesc='" + (index - j) + "' />");
 				// subsequently append slidebar images
 			}
 			$("img.thumbnail").css("top", -transitionDistance + "px");		
-
-			$("img.thumbnail").animate	// to do: add queueing
+			$("img.thumbnail").clearQueue();// if animation hasn't finished, it'll force it to stop and this one will be executed
+			$("img.thumbnail").animate
 			(
 				{
 					top: "-32px"			// absolute position of a thumbnail in relation to slidebar (look at relevant selector in styles.css)
@@ -185,7 +187,7 @@ function changeSlidebar(imgList, index, reverse)						// if reverse is true, the
 				}
 				else
 				{
-					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/thumbnails/thumbnail_" + imgList[index + j] + "' alt='Image " + (index + j + 1) +  "' longdesc='" + (index + j) + "' />");
+					$("div#nextSlidebarImg").before("<img class='thumbnail' src='img/thumbnails/thumbnail_" + imgList[index + j] + "' alt='Miniature Image " + (index + j + 1) +  "' longdesc='" + (index + j) + "' />");
 					// subsequently append slidebar images before the next slidebar iteration button 
 				}
 			}
@@ -312,5 +314,63 @@ $("img#fullSize").click
 				$(".bigImage").remove();
 			}
 		);
+	}
+);
+
+$("span.change").click
+(
+	function(event)
+	{
+		var spans = document.getElementsByClassName("change");
+		switch(this)
+		{
+			case spans[0]:										// enlarge text
+				$('*:not(h2, .rating, div.rating > span, .stars, .starSelected)').css('font-size', 'large');		// select everything but h2, rating class and its children elements
+				break;
+			case spans[1]:										// shrink text
+				$('*:not(h2, .rating, div.rating > span, .stars, .starSelected)').css('font-size', 'small');
+				break;
+			case spans[2]:										// normal colour scheme
+				$('*').css('color', '#000000');					// start with making every element have black colour so it's easier to set these which are supposed to have another
+				$('body').css('background-color', '#ffffff');
+				$('a.mainNavLink, a.sideNavLink').css('background-color', '#000000');
+				$('a.mainNavLink, a.sideNavLink').css('color', '#ffffff');
+				
+				$('a.mainNavLink, a.sideNavLink').hover
+				(
+					function mouseIn()
+					{
+						$(this).css('background-color', '#ffffff');
+						$(this).css('color', '#000000');
+					},
+					function mouseOut()
+					{
+						$(this).css('background-color', '#000000');
+						$(this).css('color', '#ffffff');
+					}
+				);
+				break;
+			case spans[3]:										// high contrast
+				$('*').css('color', '#ffffff');
+				$('body').css('background-color', '#000000');
+				$('a.mainNavLink, a.sideNavLink').css('background-color', '#ffffff');
+				$('a.mainNavLink, a.sideNavLink').css('color', '#000000');
+				$('a.mainNavLink, a.sideNavLink').hover
+				(
+					function mouseIn()
+					{
+						$(this).css('background-color', '#000000');
+						$(this).css('color', '#ffffff');
+					},
+					function mouseOut()
+					{
+						$(this).css('background-color', '#ffffff');
+						$(this).css('color', '#000000');
+					}
+				);
+				break;
+			default:
+				console.log("Change class event handler failed!");
+		}
 	}
 );
