@@ -1,5 +1,5 @@
 "use strict";
-// utility functions for local storage with use of JSON
+// utility functions for local storage with use of JSON (from lab work)
 function setObject(key, value) 
 {
 	window.localStorage.setItem(key, JSON.stringify(value));
@@ -332,7 +332,9 @@ $("span.change").click
 				break;
 			case spans[2]:										// normal colour scheme
 				$('*').css('color', '#000000');					// start with making every element have black colour so it's easier to set these which are supposed to have another
+				$('input, textarea').css('background-color', '#ffffff');
 				$('body').css('background-color', '#ffffff');
+				$('a').css('color', 'blue');
 				$('a.mainNavLink, a.sideNavLink').css('background-color', '#000000');
 				$('a.mainNavLink, a.sideNavLink').css('color', '#ffffff');
 				
@@ -352,7 +354,9 @@ $("span.change").click
 				break;
 			case spans[3]:										// high contrast
 				$('*').css('color', '#ffffff');
+				$('input, textarea').css('background-color', '#000000');
 				$('body').css('background-color', '#000000');
+				$('a').css('color', 'blue');
 				$('a.mainNavLink, a.sideNavLink').css('background-color', '#ffffff');
 				$('a.mainNavLink, a.sideNavLink').css('color', '#000000');
 				$('a.mainNavLink, a.sideNavLink').hover

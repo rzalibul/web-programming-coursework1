@@ -1,8 +1,11 @@
 /* review/comment page specific */
 div#sideNav
 {
+	/* override position */
+	position: absolute;
 	/* override top margin to position the element better */
-	margin-top: 40vh;
+	left: 4vw;
+	top: calc(100% - 25vh);
 	/* disable text selection */
 	-webkit-user-select: none;
     -khtml-user-select: none;
@@ -22,7 +25,7 @@ div#commentList
 }
 div#commentArea
 {
-	
+	margin-top: 25vh;
 }
 input#nameBox
 {
