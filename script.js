@@ -337,7 +337,7 @@ $("span.change").click
 				$('a').css('color', 'blue');
 				$('a.mainNavLink, a.sideNavLink').css('background-color', '#000000');
 				$('a.mainNavLink, a.sideNavLink').css('color', '#ffffff');
-				
+				$('div.imgNav, div.imgSlideNav').css('color', '#ffffff'); 
 				$('a.mainNavLink, a.sideNavLink').hover
 				(
 					function mouseIn()
